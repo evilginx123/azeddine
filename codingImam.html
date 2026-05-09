@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عزالدين جيلالي | Coding Imam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { rakkas: ['Rakkas'], tajawal: ['Tajawal'], noto: ['Noto Sans Arabic'] },
+                    colors: {
+                        primary: { 50:'#fff7ed',100:'#ffedd5',200:'#fed7aa',300:'#fdba74',400:'#fb923c',500:'#f97316',600:'#ea580c',700:'#c2410c',800:'#9a3412',900:'#7c2d12' },
+                        dark: { 50:'#262626',100:'#1a1a1a',200:'#171717',300:'#141414',400:'#111111',500:'#0d0d0d',600:'#0a0a0a',700:'#080808',800:'#050505',900:'#000000' },
+                        gold: { 400:'#d4a843',500:'#c49a38',600:'#b08a30' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg: #0a0a0a; --bg2: #111111; --bg3: #1a1a1a; --bg4: #222222;
+            --text: #ffffff; --text2: #a3a3a3; --text3: #737373;
+            --primary: #f97316; --primary-light: #fb923c; --primary-dark: #ea580c;
+            --gold: #d4a843; --border: rgba(255,255,255,0.08);
+            --glass: rgba(26,26,26,0.8); --glass-border: rgba(255,255,255,0.06);
+        }
+        [data-theme="light"] {
+            --bg: #f5f0eb; --bg2: #ede7e0; --bg3: #ffffff; --bg4: #f0ebe5;
+            --text: #1a1a1a; --text2: #525252; --text3: #737373;
+            --border: rgba(0,0,0,0.08); --glass: rgba(255,255,255,0.85);
+            --glass-border: rgba(0,0,0,0.06);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Tajawal', 'Noto Sans Arabic', sans-serif;
+            background: var(--bg); color: var(--text);
+            transition: background 0.5s, color 0.5s;
+            overflow-x: hidden;
+        }
+        ::selection { background: var(--primary); color: #fff; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg2); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-dark); border-radius: 4px; }
+
+        /* Ripple Canvas */
+        #rippleCanvas { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top:0; right:0; left:0; z-index:1000;
+            background: var(--glass); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
+        .navbar.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .nav-link {
+            color: var(--text2); font-weight: 500; padding: 8px 14px;
+            border-radius: 8px; transition: all 0.3s; font-size: 14px;
+            text-decoration: none; white-space: nowrap;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--primary); background: rgba(249,115,22,0.1); }
+
+        /* Hero */
+        .hero-section { position: relative; min-height: 100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+        .hero-bg-pattern {
+            position:absolute; inset:0; z-index:0;
+            background-image: radial-gradient(circle at 50% 30%, rgba(249,115,22,0.08) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 80%, rgba(212,168,67,0.05) 0%, transparent 40%);
+        }
+        .hero-mosque-glow {
+            position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            width: 500px; height: 500px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+            z-index:0; animation: pulseGlow 4s ease-in-out infinite;
+        }
+        @keyframes pulseGlow { 0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1} 50%{transform:translate(-50%,-50%) scale(1.15);opacity:0.7} }
+
+        /* Avatar */
+        .avatar-ring {
+            width: 180px; height: 180px; border-radius: 50%; padding: 4px;
+            background: conic-gradient(from 0deg, var(--primary), var(--gold), var(--primary), var(--gold), var(--primary));
+            animation: rotateRing 6s linear infinite;
+            box-shadow: 0 0 40px rgba(249,115,22,0.3), 0 0 80px rgba(249,115,22,0.1);
+        }
+        @keyframes rotateRing { to { background: conic-gradient(from 360deg, var(--primary), var(--gold), var(--primary), var(--gold), var(--primary)); } }
+        .avatar-inner {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: var(--bg3); display:flex; align-items:center; justify-content:center;
+            font-size: 64px; color: var(--primary);
+        }
+
+        /* Bismillah */
+        .bismillah { font-family: 'Rakkas', serif; font-size: 2rem; color: var(--gold); text-shadow: 0 0 20px rgba(212,168,67,0.3); }
+
+        /* Countdown */
+        .countdown-box {
+            background: var(--bg3); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 16px; min-width: 70px; text-align: center;
+            transition: all 0.3s;
+        }
+        .countdown-box:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .countdown-num { font-size: 1.5rem; font-weight: 800; color: var(--primary); line-height:1; }
+        .countdown-label { font-size: 0.7rem; color: var(--text3); margin-top: 4px; }
+
+        /* Stats */
+        .stat-item {
+            text-align:center; padding: 24px 16px;
+            border-left: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .stat-item:last-child { border-left: none; }
+        .stat-item:hover { background: rgba(249,115,22,0.05); }
+        .stat-num { font-size: 2rem; font-weight: 900; color: var(--primary); line-height:1; }
+        .stat-label { font-size: 0.85rem; color: var(--text2); margin-top: 4px; }
+
+        /* Section Title */
+        .section-title {
+            font-family: 'Rakkas', serif; font-size: 2.2rem; color: var(--text);
+            position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content:''; position:absolute; bottom:-8px; right:0; width:60px; height:3px;
+            background: linear-gradient(to left, var(--primary), var(--gold)); border-radius: 2px;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); border-radius: 16px;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1); overflow: hidden;
+        }
+        .glass-card:hover {
+            border-color: rgba(249,115,22,0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(249,115,22,0.05);
+        }
+
+        /* Icon Circle */
+        .icon-circle {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(249,115,22,0.1); border: 1px solid rgba(249,115,22,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: var(--primary); transition: all 0.3s;
+        }
+        .glass-card:hover .icon-circle {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 0 20px rgba(249,115,22,0.4);
+        }
+
+        /* Tech Tag */
+        .tech-tag {
+            display:inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem;
+            background: rgba(249,115,22,0.1); color: var(--primary); border: 1px solid rgba(249,115,22,0.15);
+            font-weight: 500;
+        }
+
+        /* Skill Bar */
+        .skill-bar-bg { height: 8px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+        .skill-bar-fill {
+            height: 100%; border-radius: 4px; width: 0;
+            background: linear-gradient(to left, var(--primary), var(--gold));
+            transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 0 10px rgba(249,115,22,0.3);
+        }
+
+        /* Blog Card */
+        .blog-card { position:relative; }
+        .blog-card::before {
+            content:''; position:absolute; top:0; right:0; left:0; height:3px;
+            background: linear-gradient(to left, var(--primary), var(--gold));
+            transform: scaleX(0); transition: transform 0.4s; transform-origin: right;
+        }
+        .blog-card:hover::before { transform: scaleX(1); }
+
+        /* Contact Input */
+        .form-input {
+            width:100%; padding: 14px 18px; border-radius: 12px;
+            background: var(--bg2); border: 1px solid var(--border);
+            color: var(--text); font-family: 'Tajawal', sans-serif; font-size: 0.95rem;
+            transition: all 0.3s; outline: none;
+        }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(249,115,22,0.15); }
+        .form-input::placeholder { color: var(--text3); }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(to left, var(--primary), var(--primary-dark));
+            color: #fff; padding: 12px 28px; border-radius: 12px; border:none;
+            font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249,115,22,0.35); }
+        .btn-outline {
+            background: transparent; color: var(--primary); padding: 12px 28px;
+            border-radius: 12px; border: 1px solid var(--primary);
+            font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-outline:hover { background: rgba(249,115,22,0.1); }
+
+        /* Modal */
+        .modal-overlay {
+            position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px); display:none; align-items:center; justify-content:center;
+            padding: 16px; opacity:0; transition: opacity 0.3s;
+        }
+        .modal-overlay.show { display:flex; opacity:1; }
+        .modal-content {
+            background: var(--bg3); border: 1px solid var(--border); border-radius: 20px;
+            width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+            transform: scale(0.9) translateY(20px); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .modal-overlay.show .modal-content { transform: scale(1) translateY(0); }
+
+        /* Page Overlay */
+        .page-overlay {
+            position:fixed; inset:0; z-index:1500; background:var(--bg);
+            overflow-y:auto; display:none; opacity:0; transition: opacity 0.4s;
+        }
+        .page-overlay.show { display:block; opacity:1; }
+
+        /* Star Rating */
+        .star-rating i { font-size: 2.5rem; color: var(--bg2); cursor: pointer; transition: all 0.2s; margin: 0 4px; }
+        .star-rating i.active, .star-rating i:hover { color: var(--gold); transform: scale(1.1); }
+
+        /* FAQ */
+        .faq-item { border: 1px solid var(--border); border-radius: 12px; overflow:hidden; transition: all 0.3s; }
+        .faq-item:hover { border-color: rgba(249,115,22,0.2); }
+        .faq-header {
+            padding: 16px 20px; cursor: pointer; display:flex; align-items:center;
+            justify-content: space-between; font-weight: 700; color: var(--text);
+            background: transparent; border:none; width:100%; text-align:right;
+            font-family: 'Tajawal', sans-serif; font-size: 0.95rem;
+        }
+        .faq-header i { transition: transform 0.3s; color: var(--primary); }
+        .faq-item.open .faq-header i { transform: rotate(180deg); }
+        .faq-body { max-height:0; overflow:hidden; transition: max-height 0.4s ease; }
+        .faq-item.open .faq-body { max-height: 200px; }
+        .faq-body-inner { padding: 0 20px 16px; color: var(--text2); font-size: 0.9rem; line-height: 1.8; }
+
+        /* Quick Nav Dots */
+        .quick-nav {
+            position: fixed; left: 20px; top: 50%; transform: translateY(-50%);
+            z-index: 900; display: flex; flex-direction: column; gap: 12px;
+        }
+        .quick-dot {
+            width: 10px; height: 10px; border-radius: 50%; background: var(--text3);
+            cursor: pointer; transition: all 0.3s; border: none; position: relative;
+        }
+        .quick-dot.active { background: var(--primary); box-shadow: 0 0 10px rgba(249,115,22,0.5); transform: scale(1.3); }
+        .quick-dot::after {
+            content: attr(data-label); position: absolute; left: 20px; top: 50%;
+            transform: translateY(-50%); background: var(--bg3); color: var(--text);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; white-space: nowrap;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s; border: 1px solid var(--border);
+        }
+        .quick-dot:hover::after { opacity: 1; }
+
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed; bottom: 30px; left: 30px; z-index: 900;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--primary); color: #fff; border: none;
+            cursor: pointer; display: none; align-items: center; justify-content: center;
+            font-size: 18px; box-shadow: 0 4px 15px rgba(249,115,22,0.4);
+            transition: all 0.3s;
+        }
+        .scroll-top.show { display: flex; }
+        .scroll-top:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(249,115,22,0.5); }
+
+        /* Reveal Animation */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Fire shimmer on cards */
+        .fire-shimmer { position: relative; }
+        .fire-shimmer::before {
+            content:''; position:absolute; inset:-1px; border-radius:17px; z-index:-1;
+            background: linear-gradient(45deg, transparent 40%, rgba(249,115,22,0.15) 50%, transparent 60%);
+            background-size: 200% 200%; animation: fireShimmer 3s ease-in-out infinite;
+        }
+        @keyframes fireShimmer { 0%{background-position:200% 200%} 100%{background-position:0% 0%} }
+
+        /* Toast */
+        .toast {
+            position:fixed; bottom:30px; right:30px; z-index:3000;
+            padding: 14px 24px; border-radius: 12px; font-weight: 600;
+            color: #fff; transform: translateY(100px); opacity:0;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+            font-family: 'Tajawal', sans-serif;
+        }
+        .toast.show { transform: translateY(0); opacity:1; }
+        .toast-success { background: linear-gradient(135deg, #059669, #047857); }
+        .toast-error { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed; top:0; right:0; bottom:0; width: 280px; z-index: 1100;
+            background: var(--bg3); border-left: 1px solid var(--border);
+            transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+            padding: 80px 24px 24px; overflow-y: auto;
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu-overlay { position:fixed; inset:0; z-index:1050; background:rgba(0,0,0,0.5); display:none; }
+        .mobile-menu-overlay.show { display:block; }
+
+        /* Tab */
+        .tab-btn {
+            padding: 10px 20px; border-radius: 10px; border: none; cursor: pointer;
+            font-family: 'Tajawal', sans-serif; font-weight: 700; font-size: 0.9rem;
+            color: var(--text2); background: transparent; transition: all 0.3s;
+        }
+        .tab-btn.active { background: var(--primary); color: #fff; }
+
+        /* Decorative elements */
+        .deco-star {
+            position:absolute; color: var(--gold); opacity:0.15; font-size: 1.2rem;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        @keyframes twinkle { 0%,100%{opacity:0.1;transform:scale(1)} 50%{opacity:0.3;transform:scale(1.2)} }
+
+        /* Footer */
+        .footer-link { color: var(--text2); text-decoration:none; transition:color 0.3s; font-size:0.9rem; }
+        .footer-link:hover { color: var(--primary); }
+
+        @media (max-width: 768px) {
+            .quick-nav { display: none; }
+            .avatar-ring { width: 140px; height: 140px; }
+            .avatar-inner { font-size: 48px; }
+            .bismillah { font-size: 1.5rem; }
+            .section-title { font-size: 1.8rem; }
+            .stat-item { border-left: none; border-bottom: 1px solid var(--border); }
+            .stat-item:last-child { border-bottom: none; }
+        }
+
+        /* Confirm Modal */
+        .confirm-modal {
+            position:fixed; inset:0; z-index:2500; background:rgba(0,0,0,0.7);
+            backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center;
+            padding:16px;
+        }
+        .confirm-modal.show { display:flex; }
+        .confirm-box {
+            background:var(--bg3); border:1px solid var(--border); border-radius:20px;
+            padding:32px; text-align:center; max-width:380px; width:100%;
+            animation: confirmPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes confirmPop { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+
+        .geometric-bg {
+            position:absolute; inset:0; z-index:0; opacity:0.03;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='%23f97316' stroke-width='0.5'/%3E%3C/svg%3E");
+            background-size: 60px 60px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-3 text-decoration-none" style="text-decoration:none">
+                <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,var(--primary),var(--gold))">
+                    <i class="fas fa-mosque text-white text-sm"></i>
+                </div>
+                <span class="font-rakkas text-lg" style="color:var(--text)">عزالدين جيلالي</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-1">
+                <a href="#hero" class="nav-link active" data-section="hero">الرئيسية</a>
+                <a href="#projects" class="nav-link" data-section="projects">المشاريع</a>
+                <a href="#blog" class="nav-link" data-section="blog">المدونة</a>
+                <a href="#about" class="nav-link" data-section="about">عن الإمام</a>
+                <a href="#contact" class="nav-link" data-section="contact">اتصل بنا</a>
+                <a href="#" class="nav-link" onclick="openPage('support');return false">الدعم</a>
+                <a href="#" class="nav-link" onclick="openPage('aboutApp');return false">حول</a>
+                <a href="#" class="nav-link" onclick="openPage('rating');return false">تقييم</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2)" aria-label="تبديل الوضع">
+                    <i class="fas fa-moon text-sm" id="themeIcon"></i>
+                </button>
+                <button onclick="openAuthModal()" class="btn-primary hidden sm:inline-flex" style="padding:8px 18px;font-size:0.85rem;border-radius:10px">
+                    <i class="fas fa-sign-in-alt"></i> دخول
+                </button>
+                <button class="lg:hidden w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2)" onclick="toggleMobileMenu()" aria-label="القائمة">
+                    <i class="fas fa-bars text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex flex-col gap-2">
+            <a href="#hero" class="nav-link" onclick="toggleMobileMenu()">الرئيسية</a>
+            <a href="#projects" class="nav-link" onclick="toggleMobileMenu()">المشاريع</a>
+            <a href="#blog" class="nav-link" onclick="toggleMobileMenu()">المدونة</a>
+            <a href="#about" class="nav-link" onclick="toggleMobileMenu()">عن الإمام</a>
+            <a href="#contact" class="nav-link" onclick="toggleMobileMenu()">اتصل بنا</a>
+            <a href="#" class="nav-link" onclick="openPage('support');toggleMobileMenu();return false">الدعم الفني</a>
+            <a href="#" class="nav-link" onclick="openPage('aboutApp');toggleMobileMenu();return false">حول الموقع</a>
+            <a href="#" class="nav-link" onclick="openPage('rating');toggleMobileMenu();return false">تقييم الموقع</a>
+            <hr style="border-color:var(--border);margin:8px 0">
+            <button class="btn-primary w-full justify-center" onclick="openAuthModal();toggleMobileMenu()">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero-section" id="hero">
+        <div class="hero-bg-pattern"></div>
+        <div class="geometric-bg"></div>
+        <div class="hero-mosque-glow"></div>
+        <canvas id="rippleCanvas"></canvas>
+        <div class="deco-star" style="top:15%;right:20%"><i class="fas fa-star-and-crescent"></i></div>
+        <div class="deco-star" style="top:25%;left:15%;animation-delay:1s"><i class="fas fa-star"></i></div>
+        <div class="deco-star" style="bottom:20%;right:10%;animation-delay:2s"><i class="fas fa-star"></i></div>
+        <div class="deco-star" style="bottom:30%;left:25%;animation-delay:0.5s"><i class="fas fa-star-and-crescent"></i></div>
+
+        <div class="relative z-10 text-center px-4 pt-16">
+            <p class="bismillah mb-6">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+            <div class="flex justify-center mb-6">
+                <div class="avatar-ring">
+                    <div class="avatar-inner">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="font-rakkas text-4xl sm:text-5xl md:text-6xl mb-3" style="color:var(--text)">عزالدين جيلالي</h1>
+            <p class="text-xl sm:text-2xl font-bold mb-4" style="color:var(--primary)">Coding Imam</p>
+            <p class="text-base sm:text-lg max-w-xl mx-auto mb-3" style="color:var(--text2);line-height:1.9">
+                إمام مسجد عمر بن الخطاب — قرية الجفافلة، وهران، الجزائر
+            </p>
+            <p class="text-sm max-w-lg mx-auto mb-8" style="color:var(--text3);line-height:1.8">
+                مبرمج متخصص في بناء الحلول التقنية الإسلامية والمجتمعية | "خير الناس أنفعهم للناس"
+            </p>
+
+            <!-- Countdown -->
+            <div class="flex justify-center gap-3 sm:gap-4 mb-8 flex-wrap">
+                <div class="countdown-box">
+                    <div class="countdown-num" id="cd-days">00</div>
+                    <div class="countdown-label">يوم</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="cd-hours">00</div>
+                    <div class="countdown-label">ساعة</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="cd-mins">00</div>
+                    <div class="countdown-label">دقيقة</div>
+                </div>
+                <div class="countdown-box">
+                    <div class="countdown-num" id="cd-secs">00</div>
+                    <div class="countdown-label">ثانية</div>
+                </div>
+            </div>
+            <p class="text-xs mb-8" style="color:var(--text3)">
+                <i class="fas fa-clock ml-1" style="color:var(--primary)"></i> العد التنازلي لهاكاثون الحلول الإسلامية القادم
+            </p>
+
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="#projects" class="btn-primary"><i class="fas fa-rocket"></i> استعرض المشاريع</a>
+                <a href="#contact" class="btn-outline"><i class="fas fa-envelope"></i> تواصل معي</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4">
+                <div class="stat-item reveal">
+                    <div class="stat-num" data-count="5">0</div>
+                    <div class="stat-label">سنوات الخبرة</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.1s">
+                    <div class="stat-num" data-count="15">0</div>
+                    <div class="stat-label">مشروع مكتمل</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.2s">
+                    <div class="stat-num" data-count="200">0</div>
+                    <div class="stat-label">مستفيد</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.3s">
+                    <div class="stat-num" data-count="50">0</div>
+                    <div class="stat-label">نشاط دعوي</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section class="py-20 sm:py-24 relative" id="projects">
+        <div class="geometric-bg"></div>
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-title">المشاريع البرمجية</h2>
+                <p class="mt-6" style="color:var(--text2);max-width:500px;margin-left:auto;margin-right:auto">
+                    حلول تقنية إسلامية ومجتمعية مبنية بأحدث التقنيات
+                </p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div class="glass-card fire-shimmer p-6 reveal">
+                    <div class="icon-circle mb-4"><i class="fas fa-quran"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">مصحف تفاعلي</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">تطبيق ويب لقراءة القرآن الكريم مع تفسير مبسط وخريطة تفاعلية للآيات والسور.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+                <!-- Project 2 -->
+                <div class="glass-card fire-shimmer p-6 reveal" style="transition-delay:0.1s">
+                    <div class="icon-circle mb-4"><i class="fas fa-clock"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">مواقيت الصلاة</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">أداة دقيقة لحساب أوقات الصلاة حسب الموقع الجغرافي مع إشعارات ذكية.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">JavaScript</span><span class="tech-tag">Geolocation API</span>
+                    </div>
+                </div>
+                <!-- Project 3 -->
+                <div class="glass-card fire-shimmer p-6 reveal" style="transition-delay:0.2s">
+                    <div class="icon-circle mb-4"><i class="fas fa-mosque"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">إدارة المسجد</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">نظام متكامل لإدارة شؤون المسجد من دروس ومحاضرات وحسابات مالية.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span class="tech-tag">Bootstrap</span>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="glass-card fire-shimmer p-6 reveal">
+                    <div class="icon-circle mb-4"><i class="fas fa-book-open"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">مكتبة إسلامية رقمية</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">منصة رقمية تضم آلاف الكتب والفتاوى مع بحث متقدم وتصنيف ذكي.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span>
+                    </div>
+                </div>
+                <!-- Project 5 -->
+                <div class="glass-card fire-shimmer p-6 reveal" style="transition-delay:0.1s">
+                    <div class="icon-circle mb-4"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">منصة الزكاة</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">حاسبة زكاة شاملة مع إمكانية ربط المستحقين بالمتبرعين بشكل آمن.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">Python</span><span class="tech-tag">Flask</span><span class="tech-tag">SQLite</span>
+                    </div>
+                </div>
+                <!-- Project 6 -->
+                <div class="glass-card fire-shimmer p-6 reveal" style="transition-delay:0.2s">
+                    <div class="icon-circle mb-4"><i class="fas fa-graduation-cap"></i></div>
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--text)">تعلّم العربية</h3>
+                    <p class="text-sm mb-4" style="color:var(--text2);line-height:1.8">تطبيق تعليمي تفاعلي لتعلم اللغة العربية للناطقين بغيرها بألعاب وتمارين.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tech-tag">Vue.js</span><span class="tech-tag">Firebase</span><span class="tech-tag">PWA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ===== -->
+    <section class="py-20 sm:py-24" id="blog" style="background:var(--bg2)">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-title">المدونة</h2>
+                <p class="mt-6" style="color:var(--text2);max-width:500px;margin-left:auto;margin-right:auto">
+                    مقالات تقنية ودينية تجمع بين البرمجة والإسلام
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Blog 1 -->
+                <article class="glass-card blog-card reveal">
+                    <div class="h-44 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(212,168,67,0.1))">
+                        <i class="fas fa-laptop-code text-5xl" style="color:var(--primary);opacity:0.6"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-3 mb-3 text-xs" style="color:var(--text3)">
+                            <span><i class="far fa-calendar ml-1"></i> 15 يناير 2025</span>
+                            <span><i class="far fa-folder ml-1"></i> تقنية</span>
+                        </div>
+                        <h3 class="font-bold text-base mb-2" style="color:var(--text)">كيف تبني تطبيقاً إسلامياً من الصفر</h3>
+                        <p class="text-sm" style="color:var(--text2);line-height:1.8">دليل عملي شامل يأخذك خطوة بخطوة من الفكرة إلى الإطلاق، مع نصائح حول اختيار التقنيات المناسبة...</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-bold" style="color:var(--primary);text-decoration:none">
+                            اقرأ المزيد <i class="fas fa-arrow-left text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+                <!-- Blog 2 -->
+                <article class="glass-card blog-card reveal" style="transition-delay:0.1s">
+                    <div class="h-44 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(212,168,67,0.15),rgba(249,115,22,0.1))">
+                        <i class="fas fa-code text-5xl" style="color:var(--gold);opacity:0.6"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-3 mb-3 text-xs" style="color:var(--text3)">
+                            <span><i class="far fa-calendar ml-1"></i> 2 فبراير 2025</span>
+                            <span><i class="far fa-folder ml-1"></i> برمجة</span>
+                        </div>
+                        <h3 class="font-bold text-base mb-2" style="color:var(--text)">أخلاق المبرمج المسلم في عصر الذكاء الاصطناعي</h3>
+                        <p class="text-sm" style="color:var(--text2);line-height:1.8">كيف نتوازن بين الاستفادة من التقنيات الحديثة والحفاظ على مبادئنا الإسلامية في عالم سريع التغير...</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-bold" style="color:var(--primary);text-decoration:none">
+                            اقرأ المزيد <i class="fas fa-arrow-left text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+                <!-- Blog 3 -->
+                <article class="glass-card blog-card reveal" style="transition-delay:0.2s">
+                    <div class="h-44 flex items-center justify-center" style="background:linear-gradient(135deg,rgba(249,115,22,0.1),rgba(212,168,67,0.15))">
+                        <i class="fas fa-mosque text-5xl" style="color:var(--primary);opacity:0.6"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-3 mb-3 text-xs" style="color:var(--text3)">
+                            <span><i class="far fa-calendar ml-1"></i> 20 فبراير 2025</span>
+                            <span><i class="far fa-folder ml-1"></i> ديني</span>
+                        </div>
+                        <h3 class="font-bold text-base mb-2" style="color:var(--text)">دور التقنية في نشر العلم الشرعي</h3>
+                        <p class="text-sm" style="color:var(--text2);line-height:1.8">رؤية مستقبلية لكيفية توظيف المنصات الرقمية والذكاء الاصطناعي في خدمة الدعوة الإسلامية...</p>
+                        <a href="#" class="inline-flex items-center gap-1 mt-4 text-sm font-bold" style="color:var(--primary);text-decoration:none">
+                            اقرأ المزيد <i class="fas fa-arrow-left text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="py-20 sm:py-24 relative" id="about">
+        <div class="geometric-bg"></div>
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-title">عن الإمام</h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10 mb-16">
+                <!-- Bio -->
+                <div class="reveal">
+                    <div class="glass-card p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="icon-circle" style="width:56px;height:56px;font-size:22px"><i class="fas fa-user"></i></div>
+                            <div>
+                                <h3 class="font-bold text-lg" style="color:var(--text)">السيرة الذاتية</h3>
+                                <p class="text-xs" style="color:var(--text3)">إمام ومبرمج</p>
+                            </div>
+                        </div>
+                        <p class="text-sm mb-4" style="color:var(--text2);line-height:2">
+                            الحمد لله، أنا عزالدين جيلالي، إمام مسجد عمر بن الخطاب بقرية الجفافلة، ولاية وهران، الجزائر. أجمع بين خدمة الدين وعلوم البرمجة، مؤمن بأن التقنية أمانة يجب توظيفها في خدمة الإسلام والمجتمع.
+                        </p>
+                        <p class="text-sm mb-4" style="color:var(--text2);line-height:2">
+                            بدأت رحلتي في البرمجة منذ 5 سنوات، وتخصصت في تطوير الويب وبناء الحلول التقنية للمساجد والجمعيات الإسلامية. أسعى لنشر العلم الشرعي عبر المنصات الرقمية.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="tech-tag"><i class="fas fa-map-marker-alt ml-1"></i> وهران، الجزائر</span>
+                            <span class="tech-tag"><i class="fas fa-mosque ml-1"></i> مسجد عمر بن الخطاب</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mosque Activities -->
+                <div class="reveal" style="transition-delay:0.15s">
+                    <div class="glass-card p-8">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="icon-circle" style="width:56px;height:56px;font-size:22px"><i class="fas fa-mosque"></i></div>
+                            <div>
+                                <h3 class="font-bold text-lg" style="color:var(--text)">أنشطة المسجد</h3>
+                                <p class="text-xs" style="color:var(--text3)">خدمة المجتمع</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--primary)"></div>
+                                <p class="text-sm" style="color:var(--text2);line-height:1.8"><strong style="color:var(--text)">دروس علمية أسبوعية:</strong> تفسير القرآن، الحديث النبوي، الفقه الإسلامي</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--primary)"></div>
+                                <p class="text-sm" style="color:var(--text2);line-height:1.8"><strong style="color:var(--text)">تحفيظ القرآن الكريم:</strong> حلقات يومية للأطفال والكبار</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--primary)"></div>
+                                <p class="text-sm" style="color:var(--text2);line-height:1.8"><strong style="color:var(--text)">إرشاد أسري:</strong> استشارات شرعية وحلول للنزاعات الأسرية</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background:var(--primary)"></div>
+                                <p class="text-sm" style="color:var(--text2);line-height:1.8"><strong style="color:var(--text)">مبادرات مجتمعية:</strong> إفطار صائم، توزيع قفة رمضان، كفالة اليتيم</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="reveal">
+                <div class="glass-card p-8">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="icon-circle" style="width:56px;height:56px;font-size:22px"><i class="fas fa-code"></i></div>
+                        <div>
+                            <h3 class="font-bold text-lg" style="color:var(--text)">المهارات التقنية</h3>
+                            <p class="text-xs" style="color:var(--text3)">تقنيات أتقنها</p>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-5">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">HTML / CSS</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">95%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">JavaScript</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">90%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">Python</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">85%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">PHP / MySQL</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">80%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">React / Vue.js</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">75%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-bold" style="color:var(--text)">Node.js</span>
+                                <span class="text-sm font-bold" style="color:var(--primary)">70%</span>
+                            </div>
+                            <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="py-20 sm:py-24" id="contact" style="background:var(--bg2)">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-14 reveal">
+                <h2 class="section-title">تواصل معي</h2>
+                <p class="mt-6" style="color:var(--text2);max-width:500px;margin-left:auto;margin-right:auto">
+                    يسعدني تواصلك معي لأي استفسار أو اقتراح أو تعاون
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-5 gap-8">
+                <!-- Form -->
+                <div class="lg:col-span-3 reveal">
+                    <form class="glass-card p-8" id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-2" style="color:var(--text)">الاسم الكامل</label>
+                                <input type="text" class="form-input" placeholder="أدخل اسمك" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2" style="color:var(--text)">البريد الإلكتروني</label>
+                                <input type="email" class="form-input" placeholder="example@email.com" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">الموضوع</label>
+                            <input type="text" class="form-input" placeholder="موضوع الرسالة" required>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">الرسالة</label>
+                            <textarea class="form-input" rows="5" placeholder="اكتب رسالتك هنا..." required style="resize:vertical"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full justify-center">
+                            <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+                <!-- Info + Map -->
+                <div class="lg:col-span-2 space-y-6 reveal" style="transition-delay:0.15s">
+                    <div class="glass-card p-6">
+                        <h3 class="font-bold mb-4" style="color:var(--text)"><i class="fas fa-info-circle ml-2" style="color:var(--primary)"></i>معلومات التواصل</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="icon-circle" style="width:40px;height:40px;font-size:14px"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <p class="text-xs" style="color:var(--text3)">البريد الإلكتروني</p>
+                                    <p class="text-sm font-bold" style="color:var(--text)">info@eldjilali.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="icon-circle" style="width:40px;height:40px;font-size:14px"><i class="fas fa-map-marker-alt"></i></div>
+                                <div>
+                                    <p class="text-xs" style="color:var(--text3)">الموقع</p>
+                                    <p class="text-sm font-bold" style="color:var(--text)">الجفافلة، وهران، الجزائر</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="icon-circle" style="width:40px;height:40px;font-size:14px"><i class="fas fa-phone"></i></div>
+                                <div>
+                                    <p class="text-xs" style="color:var(--text3)">الهاتف</p>
+                                    <p class="text-sm font-bold" style="color:var(--text)">+213 XX XXX XXXX</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-0 overflow-hidden" style="height:220px">
+                        <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.7%2C35.65%2C-0.5%2C35.75&layer=mapnik" style="width:100%;height:100%;border:0" loading="lazy" title="خريطة الموقع"></iframe>
+                    </div>
+                    <div class="glass-card p-4">
+                        <p class="text-xs mb-3 font-bold" style="color:var(--text)">تابعني على</p>
+                        <div class="flex gap-2">
+                            <a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:rgba(249,115,22,0.1);color:var(--primary);border:1px solid rgba(249,115,22,0.15)" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:rgba(249,115,22,0.1);color:var(--primary);border:1px solid rgba(249,115,22,0.15)" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:rgba(249,115,22,0.1);color:var(--primary);border:1px solid rgba(249,115,22,0.15)" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-lg flex items-center justify-center transition-all hover:scale-110" style="background:rgba(249,115,22,0.1);color:var(--primary);border:1px solid rgba(249,115,22,0.15)" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer style="background:var(--bg);border-top:1px solid var(--border)">
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:linear-gradient(135deg,var(--primary),var(--gold))">
+                            <i class="fas fa-mosque text-white text-sm"></i>
+                        </div>
+                        <span class="font-rakkas text-lg" style="color:var(--text)">عزالدين جيلالي</span>
+                    </div>
+                    <p class="text-sm" style="color:var(--text3);line-height:1.8">إمام ومبرمج — أبناء بين خدمة الدين والتقنية لبناء مجتمع أفضل.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4" style="color:var(--text)">روابط سريعة</h4>
+                    <div class="space-y-2">
+                        <a href="#hero" class="footer-link block">الرئيسية</a>
+                        <a href="#projects" class="footer-link block">المشاريع</a>
+                        <a href="#blog" class="footer-link block">المدونة</a>
+                        <a href="#about" class="footer-link block">عن الإمام</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4" style="color:var(--text)">صفحات أخرى</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="footer-link block" onclick="openPage('support');return false">الدعم الفني</a>
+                        <a href="#" class="footer-link block" onclick="openPage('aboutApp');return false">حول الموقع</a>
+                        <a href="#" class="footer-link block" onclick="openPage('rating');return false">تقييم الموقع</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm mb-4" style="color:var(--text)">تواصل</h4>
+                    <div class="space-y-2">
+                        <p class="text-sm" style="color:var(--text3)"><i class="fas fa-envelope ml-2" style="color:var(--primary)"></i>info@eldjilali.com</p>
+                        <p class="text-sm" style="color:var(--text3)"><i class="fas fa-map-marker-alt ml-2" style="color:var(--primary)"></i>وهران، الجزائر</p>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color:var(--border);margin-bottom:20px">
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-xs" style="color:var(--text3)">© 2025 عزالدين جيلالي — Coding Imam | جميع الحقوق محفوظة</p>
+                <p class="text-xs" style="color:var(--text3)">بُني بـ <i class="fas fa-heart" style="color:var(--primary)"></i> وإخلاص</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== AUTH MODAL ===== -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-content">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-rakkas text-xl" style="color:var(--text)">مرحباً بك</h2>
+                    <button onclick="closeAuthModal()" class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--bg2);color:var(--text2);border:none;cursor:pointer" aria-label="إغلاق">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2 mb-6 p-1 rounded-xl" style="background:var(--bg2)">
+                    <button class="tab-btn active flex-1" onclick="switchAuthTab('login')" id="tabLogin">تسجيل الدخول</button>
+                    <button class="tab-btn flex-1" onclick="switchAuthTab('register')" id="tabRegister">حساب جديد</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="space-y-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">البريد الإلكتروني</label>
+                            <input type="email" class="form-input" placeholder="example@email.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">كلمة المرور</label>
+                            <input type="password" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <label class="flex items-center gap-2 cursor-pointer text-sm" style="color:var(--text2)">
+                                <input type="checkbox" style="accent-color:var(--primary)"> تذكرني
+                            </label>
+                            <a href="#" class="text-sm font-bold" style="color:var(--primary);text-decoration:none">نسيت كلمة المرور؟</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary w-full justify-center mb-4">
+                        <i class="fas fa-sign-in-alt"></i> دخول
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+                    <div class="space-y-4 mb-6">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-bold mb-2" style="color:var(--text)">الاسم الأول</label>
+                                <input type="text" class="form-input" placeholder="الاسم" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-2" style="color:var(--text)">الاسم الأخير</label>
+                                <input type="text" class="form-input" placeholder="اللقب" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">البريد الإلكتروني</label>
+                            <input type="email" class="form-input" placeholder="example@email.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">كلمة المرور</label>
+                            <input type="password" class="form-input" placeholder="••••••••" required minlength="6">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold mb-2" style="color:var(--text)">تأكيد كلمة المرور</label>
+                            <input type="password" class="form-input" placeholder="••••••••" required>
+                        </div>
+                        <label class="flex items-start gap-2 cursor-pointer text-sm" style="color:var(--text2)">
+                            <input type="checkbox" style="accent-color:var(--primary);margin-top:4px" required>
+                            أوافق على <a href="#" style="color:var(--primary);text-decoration:none;font-weight:700">شروط الاستخدام</a> و<a href="#" style="color:var(--primary);text-decoration:none;font-weight:700">سياسة الخصوصية</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-primary w-full justify-center mb-4">
+                        <i class="fas fa-user-plus"></i> إنشاء حساب
+                    </button>
+                </form>
+
+                <!-- Google Sign In -->
+                <div class="relative mb-4">
+                    <hr style="border-color:var(--border)">
+                    <span class="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 px-3 text-xs" style="background:var(--bg3);color:var(--text3)">أو</span>
+                </div>
+                <button class="w-full flex items-center justify-center gap-3 py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90" style="background:var(--bg2);border:1px solid var(--border);color:var(--text);cursor:pointer;font-family:'Tajawal',sans-serif" onclick="handleGoogleSignIn()">
+                    <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                    المتابعة بحساب Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CONFIRM MODAL ===== -->
+    <div class="confirm-modal" id="confirmModal">
+        <div class="confirm-box">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:rgba(249,115,22,0.1)">
+                <i class="fas fa-check-circle text-3xl" style="color:var(--primary)" id="confirmIcon"></i>
+            </div>
+            <h3 class="font-bold text-lg mb-2" style="color:var(--text)" id="confirmTitle">تم بنجاح!</h3>
+            <p class="text-sm mb-6" style="color:var(--text2)" id="confirmMsg">تمت العملية بنجاح</p>
+            <button class="btn-primary w-full justify-center" onclick="closeConfirmModal()">حسناً</button>
+        </div>
+    </div>
+
+    <!-- ===== SUPPORT PAGE ===== -->
+    <div class="page-overlay" id="supportPage">
+        <div class="min-h-screen">
+            <nav class="navbar scrolled">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button onclick="closePage('support')" class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer" aria-label="رجوع">
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </button>
+                        <span class="font-rakkas text-lg" style="color:var(--text)">الدعم الفني</span>
+                    </div>
+                </div>
+            </nav>
+            <div class="max-w-3xl mx-auto px-4 py-20">
+                <div class="text-center mb-12 reveal visible">
+                    <div class="icon-circle mx-auto mb-4" style="width:80px;height:80px;font-size:32px"><i class="fas fa-headset"></i></div>
+                    <h1 class="font-rakkas text-3xl mb-3" style="color:var(--text)">الدعم الفني</h1>
+                    <p style="color:var(--text2)">نجيب على أسئلتك ونحل مشاكلك التقنية</p>
+                </div>
+                <div class="space-y-3 mb-12">
+                    <div class="faq-item open">
+                        <button class="faq-header" onclick="toggleFaq(this)">
+                            <span>كيف يمكنني التواصل معكم؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-body"><div class="faq-body-inner">يمكنك التواصل معنا عبر نموذج الاتصال في الموقع، أو عبر البريد الإلكتروني info@eldjilali.com، أو من خلال وسائل التواصل الاجتماعي المتاحة.</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-header" onclick="toggleFaq(this)">
+                            <span>هل المشاريع مفتوحة المصدر؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-body"><div class="faq-body-inner">نعم، أغلب المشاريع متاحة على GitHub بموجب تراخيص مفتوحة المصدر. يمكنك استخدامها وتعديلها مع ذكر المصدر.</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-header" onclick="toggleFaq(this)">
+                            <span>هل يمكنني طلب مشروع مخصص؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-body"><div class="faq-body-inner">بالتأكيد! يمكنك إرسال تفاصيل المشروع المطلوب عبر نموذج الاتصال وسأتواصل معك لمناقشة التفاصيل والتكلفة والمدة الزمنية.</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-header" onclick="toggleFaq(this)">
+                            <span>ما هي طرق الدفع المتاحة؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-body"><div class="faq-body-inner">نوفر عدة طرق للدفع تشمل: التحويل البنكي، CCP، BaridiMob، وغيرها من الطرق المناسبة للسوق الجزائري.</div></div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-header" onclick="toggleFaq(this)">
+                            <span>كم يستغرق تنفيذ المشروع؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-body"><div class="faq-body-inner">تعتمد المدة على حجم وتعقيد المشروع. المشاريع البسيطة قد تستغرق أسبوعاً إلى أسبوعين، بينما المشاريع المتقدمة تحتاج شهراً أو أكثر.</div></div>
+                    </div>
+                </div>
+                <div class="glass-card p-8">
+                    <h3 class="font-bold text-lg mb-6" style="color:var(--text)"><i class="fas fa-envelope ml-2" style="color:var(--primary)"></i>أرسل استفسارك</h3>
+                    <form onsubmit="handleSupportSubmit(event)">
+                        <div class="space-y-4">
+                            <input type="text" class="form-input" placeholder="اسمك الكامل" required>
+                            <input type="email" class="form-input" placeholder="بريدك الإلكتروني" required>
+                            <textarea class="form-input" rows="4" placeholder="اكتب استفسارك هنا..." required style="resize:vertical"></textarea>
+                            <button type="submit" class="btn-primary w-full justify-center"><i class="fas fa-paper-plane"></i> إرسال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ABOUT APP PAGE ===== -->
+    <div class="page-overlay" id="aboutAppPage">
+        <div class="min-h-screen">
+            <nav class="navbar scrolled">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button onclick="closePage('aboutApp')" class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer" aria-label="رجوع">
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </button>
+                        <span class="font-rakkas text-lg" style="color:var(--text)">حول الموقع</span>
+                    </div>
+                </div>
+            </nav>
+            <div class="max-w-3xl mx-auto px-4 py-20">
+                <div class="text-center mb-12 reveal visible">
+                    <div class="icon-circle mx-auto mb-4" style="width:80px;height:80px;font-size:32px"><i class="fas fa-info-circle"></i></div>
+                    <h1 class="font-rakkas text-3xl mb-3" style="color:var(--text)">حول الموقع</h1>
+                    <p style="color:var(--text2)">تعرف على التقنيات والفلسفة وراء هذا الموقع</p>
+                </div>
+
+                <div class="glass-card p-8 mb-6">
+                    <h3 class="font-bold text-lg mb-4" style="color:var(--text)"><i class="fas fa-bullseye ml-2" style="color:var(--primary)"></i>الهدف من الموقع</h3>
+                    <p class="text-sm" style="color:var(--text2);line-height:2">يجمع هذا الموقع بين الهوية الدينية والإبداع التقني في تجربة رقمية واحدة متكاملة. يهدف إلى تعريف الزوار بشخصية عزالدين جيلالي كمؤسس ديني ومبرمج، وعرض مشاريعه التقنية الإسلامية، وتوفير منصة تواصل فعّالة.</p>
+                </div>
+
+                <div class="glass-card p-8 mb-6">
+                    <h3 class="font-bold text-lg mb-4" style="color:var(--text)"><i class="fas fa-layer-group ml-2" style="color:var(--primary)"></i>التقنيات المستخدمة</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fab fa-html5 text-2xl mb-2" style="color:#e34f26"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">HTML5</p>
+                        </div>
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fab fa-css3-alt text-2xl mb-2" style="color:#1572b6"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">CSS3</p>
+                        </div>
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fab fa-js-square text-2xl mb-2" style="color:#f7df1e"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">JavaScript</p>
+                        </div>
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fas fa-wind text-2xl mb-2" style="color:#38bdf8"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">Tailwind CSS</p>
+                        </div>
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fab fa-font-awesome text-2xl mb-2" style="color:#528dd7"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">Font Awesome</p>
+                        </div>
+                        <div class="text-center p-3 rounded-xl" style="background:var(--bg2)">
+                            <i class="fas fa-map text-2xl mb-2" style="color:#7ebc6f"></i>
+                            <p class="text-xs font-bold" style="color:var(--text)">OpenStreetMap</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8">
+                    <h3 class="font-bold text-lg mb-4" style="color:var(--text)"><i class="fas fa-user-cog ml-2" style="color:var(--primary)"></i>بيانات المطور</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2" style="border-bottom:1px solid var(--border)">
+                            <span class="text-sm" style="color:var(--text2)">المطور</span>
+                            <span class="text-sm font-bold" style="color:var(--text)">جيلالي عزالدين</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2" style="border-bottom:1px solid var(--border)">
+                            <span class="text-sm" style="color:var(--text2)">الإصدار</span>
+                            <span class="text-sm font-bold" style="color:var(--primary)">1.0.0</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2" style="border-bottom:1px solid var(--border)">
+                            <span class="text-sm" style="color:var(--text2)">الترخيص</span>
+                            <span class="text-sm font-bold" style="color:var(--text)">© 2025</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-sm" style="color:var(--text2)">آخر تحديث</span>
+                            <span class="text-sm font-bold" style="color:var(--text)">فبراير 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== RATING PAGE ===== -->
+    <div class="page-overlay" id="ratingPage">
+        <div class="min-h-screen">
+            <nav class="navbar scrolled">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <button onclick="closePage('rating')" class="w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--bg2);border:1px solid var(--border);color:var(--text2);cursor:pointer" aria-label="رجوع">
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </button>
+                        <span class="font-rakkas text-lg" style="color:var(--text)">تقييم الموقع</span>
+                    </div>
+                </div>
+            </nav>
+            <div class="max-w-lg mx-auto px-4 py-20">
+                <div class="text-center mb-10 reveal visible">
+                    <div class="icon-circle mx-auto mb-4" style="width:80px;height:80px;font-size:32px"><i class="fas fa-star"></i></div>
+                    <h1 class="font-rakkas text-3xl mb-3" style="color:var(--text)">قيّم تجربتك</h1>
+                    <p style="color:var(--text2)">رأيك يهمنا! ساعدنا في تحسين الموقع</p>
+                </div>
+
+                <div class="glass-card p-8 text-center mb-6">
+                    <p class="font-bold mb-6" style="color:var(--text)">كيف تقيّم الموقع بشكل عام؟</p>
+                    <div class="star-rating mb-4" id="starRating">
+                        <i class="far fa-star" data-star="1"></i>
+                        <i class="far fa-star" data-star="2"></i>
+                        <i class="far fa-star" data-star="3"></i>
+                        <i class="far fa-star" data-star="4"></i>
+                        <i class="far fa-star" data-star="5"></i>
+                    </div>
+                    <p class="text-sm" style="color:var(--text3)" id="ratingText">اختر تقييمك</p>
+                </div>
+
+                <div class="glass-card p-8">
+                    <form onsubmit="handleRatingSubmit(event)">
+                        <label class="block text-sm font-bold mb-2" style="color:var(--text)">تعليقك (اختياري)</label>
+                        <textarea class="form-input mb-4" rows="4" placeholder="شاركنا رأيك أو اقتراحاتك..." style="resize:vertical" id="ratingComment"></textarea>
+                        <button type="submit" class="btn-primary w-full justify-center"><i class="fas fa-paper-plane"></i> إرسال التقييم</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== QUICK NAV DOTS ===== -->
+    <div class="quick-nav" id="quickNav">
+        <button class="quick-dot active" data-label="الرئيسية" data-target="hero" aria-label="الرئيسية"></button>
+        <button class="quick-dot" data-label="المشاريع" data-target="projects" aria-label="المشاريع"></button>
+        <button class="quick-dot" data-label="المدونة" data-target="blog" aria-label="المدونة"></button>
+        <button class="quick-dot" data-label="عن الإمام" data-target="about" aria-label="عن الإمام"></button>
+        <button class="quick-dot" data-label="اتصل" data-target="contact" aria-label="اتصل"></button>
+    </div>
+
+    <!-- ===== SCROLL TO TOP ===== -->
+    <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="العودة لأعلى">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // === Theme Toggle ===
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            icon.className = theme === 'dark' ? 'fas fa-sun text-sm' : 'fas fa-moon text-sm';
+        }
+
+        // === Mobile Menu ===
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+            document.getElementById('mobileOverlay').classList.toggle('show');
+        }
+
+        // === Navbar Scroll ===
+        const navbar = document.getElementById('navbar');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+            updateActiveNav();
+            updateQuickDots();
+        });
+
+        // === Active Nav Link ===
+        function updateActiveNav() {
+            const sections = ['hero', 'projects', 'blog', 'about', 'contact'];
+            let current = 'hero';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop - 200 <= window.scrollY) current = id;
+            });
+            document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+                link.classList.toggle('active', link.dataset.section === current);
+            });
+        }
+
+        // === Quick Nav Dots ===
+        function updateQuickDots() {
+            const sections = ['hero', 'projects', 'blog', 'about', 'contact'];
+            let current = 'hero';
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.offsetTop - 200 <= window.scrollY) current = id;
+            });
+            document.querySelectorAll('.quick-dot').forEach(dot => {
+                dot.classList.toggle('active', dot.dataset.target === current);
+            });
+        }
+
+        document.querySelectorAll('.quick-dot').forEach(dot => {
+            dot.addEventListener('click', () => {
+                document.getElementById(dot.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // === Scroll Reveal ===
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Animate skill bars
+                    entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.width + '%';
+                    });
+                    // Animate counters
+                    entry.target.querySelectorAll('.stat-num[data-count]').forEach(num => {
+                        animateCounter(num);
+                    });
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // === Counter Animation ===
+        function animateCounter(el) {
+            if (el.dataset.animated) return;
+            el.dataset.animated = 'true';
+            const target = parseInt(el.dataset.count);
+            const duration = 2000;
+            const step = target / (duration / 16);
+            let current = 0;
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) { current = target; clearInterval(timer); }
+                el.textContent = Math.floor(current) + '+';
+            }, 16);
+        }
+
+        // === Countdown Timer ===
+        function updateCountdown() {
+            const target = new Date('2025-08-15T09:00:00').getTime();
+            const now = Date.now();
+            const diff = Math.max(0, target - now);
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+            document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // === Auth Modal ===
+        function openAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('authModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function switchAuthTab(tab) {
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+            document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+            document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+        }
+
+        document.getElementById('authModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeAuthModal();
+        });
+
+        function handleLogin(e) {
+            e.preventDefault();
+            closeAuthModal();
+            showConfirm('تم تسجيل الدخول بنجاح!', 'مرحباً بك في الموقع، أتمنى لك تجربة ممتعة.');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const pw = e.target.querySelectorAll('input[type="password"]');
+            if (pw[0].value !== pw[1].value) {
+                showToast('كلمتا المرور غير متطابقتين', 'error');
+                return;
+            }
+            closeAuthModal();
+            showConfirm('تم إنشاء الحساب بنجاح!', 'مرحباً بك! حسابك الجديد جاهز للاستخدام.');
+        }
+
+        function handleGoogleSignIn() {
+            closeAuthModal();
+            showConfirm('جارٍ التسجيل...', 'يتم الآن تسجيل الدخول بحساب Google. هذا عرض تجريبي.');
+        }
+
+        // === Confirm Modal ===
+        function showConfirm(title, msg) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMsg').textContent = msg;
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+        }
+
+        document.getElementById('confirmModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeConfirmModal();
+        });
+
+        // === Toast ===
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = `toast toast-${type} show`;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // === Contact Form ===
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showConfirm('تم إرسال الرسالة!', 'شكراً لتواصلك. سنرد عليك في أقرب وقت ممكن.');
+            e.target.reset();
+        }
+
+        // === Support Form ===
+        function handleSupportSubmit(e) {
+            e.preventDefault();
+            showConfirm('تم إرسال الاستفسار!', 'سيتم الرد على استفسارك خلال 24 ساعة.');
+            e.target.reset();
+        }
+
+        // === Page Overlays ===
+        function openPage(name) {
+            const pages = { support: 'supportPage', aboutApp: 'aboutAppPage', rating: 'ratingPage' };
+            document.getElementById(pages[name])?.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            // Trigger reveals inside page
+            setTimeout(() => {
+                document.getElementById(pages[name])?.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        function closePage(name) {
+            const pages = { support: 'supportPage', aboutApp: 'aboutAppPage', rating: 'ratingPage' };
+            const page = document.getElementById(pages[name]);
+            page.style.opacity = '0';
+            setTimeout(() => {
+                page.classList.remove('show');
+                page.style.opacity = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // === FAQ Accordion ===
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const wasOpen = item.classList.contains('open');
+            // Close all in same parent
+            item.parentElement.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        // === Star Rating ===
+        const ratingTexts = ['', 'سيء جداً', 'سيء', 'مقبول', 'جيد', 'ممتاز!'];
+        let currentRating = 0;
+
+        document.querySelectorAll('#starRating i').forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const val = parseInt(star.dataset.star);
+                highlightStars(val);
+                document.getElementById('ratingText').textContent = ratingTexts[val];
+            });
+            star.addEventListener('click', () => {
+                currentRating = parseInt(star.dataset.star);
+                highlightStars(currentRating);
+                document.getElementById('ratingText').textContent = ratingTexts[currentRating];
+            });
+        });
+
+        document.getElementById('starRating').addEventListener('mouseleave', () => {
+            highlightStars(currentRating);
+            document.getElementById('ratingText').textContent = currentRating ? ratingTexts[currentRating] : 'اختر تقييمك';
+        });
+
+        function highlightStars(count) {
+            document.querySelectorAll('#starRating i').forEach(star => {
+                const val = parseInt(star.dataset.star);
+                star.className = val <= count ? 'fas fa-star active' : 'far fa-star';
+            });
+        }
+
+        function handleRatingSubmit(e) {
+            e.preventDefault();
+            if (!currentRating) {
+                showToast('يرجى اختيار تقييم أولاً', 'error');
+                return;
+            }
+            showConfirm('شكراً لتقييمك!', `لقد قيّمت الموقع بـ ${currentRating} من 5 نجوم. رأيك يعنينا كثيراً!`);
+            currentRating = 0;
+            highlightStars(0);
+            document.getElementById('ratingText').textContent = 'اختر تقييمك';
+            document.getElementById('ratingComment').value = '';
+        }
+
+        // === Canvas Ripple Effect ===
+        const canvas = document.getElementById('rippleCanvas');
+        const ctx = canvas.getContext('2d');
+        let ripples = [];
+
+        function resizeCanvas() {
+            const hero = document.querySelector('.hero-section');
+            canvas.width = hero.offsetWidth;
+            canvas.height = hero.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        document.querySelector('.hero-section').addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            ripples.push({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                radius: 0,
+                maxRadius: 150 + Math.random() * 100,
+                opacity: 0.4,
+                speed: 2 + Math.random() * 2
+            });
+        });
+
+        function animateRipples() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ripples = ripples.filter(r => r.opacity > 0.01);
+            ripples.forEach(r => {
+                r.radius += r.speed;
+                r.opacity *= 0.97;
+                ctx.beginPath();
+                ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(249, 115, 22, ${r.opacity})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                // Inner ring
+                if (r.radius > 20) {
+                    ctx.beginPath();
+                    ctx.arc(r.x, r.y, r.radius * 0.6, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(212, 168, 67, ${r.opacity * 0.5})`;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            });
+            requestAnimationFrame(animateRipples);
+        }
+        animateRipples();
+
+        // === Keyboard: Escape to close modals ===
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAuthModal();
+                closeConfirmModal();
+                ['support', 'aboutApp', 'rating'].forEach(p => closePage(p));
+            }
+        });
+    </script>
+</body>
+</html>
